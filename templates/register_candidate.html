@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Register as a Candidate</h2>
+
+<h3>Select an Election</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Election Title</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for election in elections %}
+            <tr>
+                <td>{{ election[1] }}</td>
+                <td>{{ election[3].strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <form action="/candidate/register" method="POST">
+                        <input type="hidden" name="election_id" value="{{ election[0] }}">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

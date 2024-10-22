@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Select a Candidate to Vote</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Candidate Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if candidates %}
+                {% for candidate in candidates %}
+                    <tr>
+                        <td>{{ candidate[0] }}</td>  <!-- Candidate ID -->
+                        <td>{{ candidate[1] }}</td>  <!-- Candidate Name -->
+                        <td>
+                            <form action="/vote" method="POST">
+                                <input type="hidden" name="election_id" value="{{ election_id }}">
+                                <input type="hidden" name="candidate_id" value="{{ candidate[0] }}">  <!-- Candidate ID -->
+                                <button type="submit" class="btn btn-primary">Vote</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No candidates available.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Create Election</h2>
+<form action="/admin/create_election" method="POST">
+    <div class="mb-3">
+        <label for="name" class="form-label">Election Title</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Election Date</label>
+        <input type="datetime-local" class="form-control" id="date" name="date" required>
+    </div>
+    <button type="submit" class="btn btn-success">Create Election</button>
+</form>
+{% endblock %}

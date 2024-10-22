@@ -1,0 +1,81 @@
+<!-- vote.html -->
+{% extends "base.html" %}
+{% block content %}
+<h2>Vote in Elections</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Election ID</th>
+            <th scope="col">Election Title</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for election in elections %}
+            <tr>
+                <td>{{ election[0] }}</td>
+                <td>{{ election[1] }}</td>
+                <td>
+                    <button class="btn btn-primary" onclick="loadCandidates({{ election[0] }})">Select</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div id="candidates-section" style="display: none;">
+    <h4>Candidates for Election <span id="election-title"></span></h4>
+    <table class="table" id="candidates-table">
+        <thead>
+            <tr>
+                <th scope="col">Candidate ID</th>
+                <th scope="col">Candidate Name</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="candidates-body"></tbody>
+    </table>
+</div>
+
+<form id="vote-form" action="/vote" method="POST" style="display: none;">
+    <input type="hidden" id="election_id" name="election_id">
+    <input type="hidden" id="candidate_id" name="candidate_id">
+    <button type="submit" class="btn btn-success">Cast Vote</button>
+</form>
+
+<script>
+    function loadCandidates(electionId) {
+        document.getElementById("election_id").value = electionId;
+        const candidatesBody = document.getElementById("candidates-body");
+        candidatesBody.innerHTML = ''; // Clear previous candidates
+
+        fetch(`/candidates/${electionId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.candidates.length > 0) {
+                    document.getElementById("election-title").textContent = data.election_title;
+                    document.getElementById("candidates-section").style.display = 'block';
+
+                    data.candidates.forEach(candidate => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${candidate.id}</td>
+                            <td>${candidate.name}</td>
+                            <td><button class="btn btn-secondary" onclick="setCandidate(${candidate.id})">Vote</button></td>
+                        `;
+                        candidatesBody.appendChild(row);
+                    });
+                } else {
+                    alert("No candidates available for this election.");
+                }
+            })
+            .catch(error => console.error('Error fetching candidates:', error));
+    }
+
+    function setCandidate(candidateId) {
+        document.getElementById("candidate_id").value = candidateId;
+        document.getElementById("vote-form").style.display = 'block';
+    }
+</script>
+{% endblock %}

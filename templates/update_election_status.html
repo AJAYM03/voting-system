@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Update Election Status</h2>
+<form action="/admin/update_election_status" method="POST">
+    <div class="mb-3">
+        <label for="election_id" class="form-label">Select Election</label>
+        <select class="form-select" id="election_id" name="election_id" required>
+            {% for election in elections %}
+                <option value="{{ election.id }}">{{ election.title }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">New Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="scheduled">Scheduled</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="completed">Completed</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Status</button>
+</form>
+{% endblock %}
