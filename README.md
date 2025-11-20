@@ -1,48 +1,69 @@
-````markdown
-# Online Voting System
+# Online Voting System  
+A secure and scalable web-based voting platform built using **Flask** and **MySQL**, offering role-based access for Administrators, Candidates, and Voters. The system handles the entire election lifecycle from scheduling to vote counting and PDF report generation.
 
-A secure, web-based voting application built with Python (Flask) and MySQL. This system supports role-based access for Administrators, Candidates, and Voters, facilitating the entire election lifecycle from scheduling to reporting results.
+---
 
-## 🚀 Features
+## Badges
 
-* **Role-Based Authentication:**
-    * **Admin:** Schedule elections, update statuses (Scheduled/Ongoing/Completed), and download statistical reports.
-    * **Candidate:** Register to run in specific upcoming elections.
-    * **Voter:** View ongoing elections and cast secure, one-time votes.
-* **Secure Voting:** Backend logic ensures one person can only vote once per election.
-* **PDF Reporting:** Generate and download election results and statistics as PDF files using ReportLab.
-* **Smart Validation:** Age restrictions enforced during registration (18+ for voters, 25+ for candidates).
+![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
+![Flask](https://img.shields.io/badge/Flask-Framework-black.svg)
+![MySQL](https://img.shields.io/badge/Database-MySQL-orange.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-## 🛠️ Tech Stack
+---
 
-* **Backend:** Python (Flask)
-* **Database:** MySQL
-* **Frontend:** HTML, CSS, Bootstrap 5
-* **PDF Generation:** ReportLab
-* **Database Driver:** mysql-connector-python
+## Features
 
-## ⚙️ Installation & Setup
+### Role-Based Access
+- **Admin**
+  - Create and schedule elections
+  - Manage election statuses (Scheduled, Ongoing, Completed)
+  - View dashboards and download statistical PDF reports
+- **Candidate**
+  - Register and apply to contest in available elections
+- **Voter**
+  - View ongoing elections
+  - Cast a secure, single vote per election
+
+### Core Functionalities
+- **One-Time Secure Voting:** Backend validation prevents duplicate voting.
+- **PDF Generation:** Election results & stats exported using ReportLab.
+- **Age Validation:** 
+  - Voter: 18 years minimum  
+  - Candidate: 25 years minimum
+
+---
+
+## Tech Stack
+
+| Layer       | Technology |
+|-------------|------------|
+| Backend     | Python (Flask) |
+| Database    | MySQL |
+| Frontend    | HTML, CSS, Bootstrap 5 |
+| PDF Engine  | ReportLab |
+| Driver      | mysql-connector-python |
+
+---
+
+## Installation & Setup
 
 ### 1. Clone the Repository
 ```bash
 git clone <repository_url>
 cd voting-system
-````
+```
 
-### 2\. Install Dependencies
-
-Ensure you have Python installed, then run:
-
+### 2. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3\. Database Setup
+### 3. Database Setup
 
-1.  Create a MySQL database named `voting_system` (or update `config.py`).
-2.  Execute the following SQL commands to create the required tables:
-
-<!-- end list -->
+1. Create a MySQL database named **voting_system**.  
+2. Run the SQL schema:
 
 ```sql
 CREATE TABLE users (
@@ -80,9 +101,11 @@ CREATE TABLE votes (
 );
 ```
 
-### 4\. Configuration
+---
 
-Update the `config.py` file with your database credentials if they differ from the defaults:
+## Configuration
+
+Modify `config.py` as needed:
 
 ```python
 class Config:
@@ -92,29 +115,62 @@ class Config:
     DB_NAME = os.getenv('DB_NAME', 'voting_system')
 ```
 
-### 5\. Run the Application
+---
 
+## Running the Application
 ```bash
 python app.py
 ```
 
-The application will start on `http://127.0.0.1:5000/`.
+Open in browser:
+```
+http://127.0.0.1:5000/
+```
 
-## 📖 Usage Guide
+---
 
-1.  **Admin Access:**
-      * Log in using the credentials defined in `config.py` (Default: User `root`, Password `1234`) to access the Admin Dashboard.
-      * Create new elections and manage their status.
-2.  **Candidate Registration:**
-      * Register a new account with the role **Candidate**.
-      * Select an election from the dashboard to register as a candidate.
-3.  **Voting:**
-      * Register a new account with the role **Voter**.
-      * Select an ongoing election and cast your vote for a candidate.
-4.  **View Results:**
-      * Admins can view real-time statistics and download PDF reports from the dashboard.
+## Usage Guide
 
-<!-- end list -->
+### Admin
+- Log in with the default admin credentials (in config).
+- Create/manage elections and statuses.
+- View stats and download PDF reports.
+
+### Candidate
+- Register with **Candidate** role.
+- Select upcoming election and register as a contestant.
+
+### Voter
+- Register with **Voter** role.
+- View ongoing elections and vote once per election.
+
+---
+
+## Folder Structure (Recommended)
 
 ```
+voting-system/
+│── app.py
+│── config.py
+│── requirements.txt
+│── static/
+│── templates/
+│── routes/
+│── models/
+│── utils/
+│── reports/
+└── README.md
 ```
+
+---
+
+## License
+This project is released under the **MIT License**.
+
+---
+
+## Contributions
+Pull requests are welcome. For major changes, please open an issue first to discuss your ideas.
+
+---
+
